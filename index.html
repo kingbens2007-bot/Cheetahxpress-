@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#050505">
+  <meta name="description" content="CheetahXpress — parfums importés et accessoires. Découvrez le catalogue et commandez rapidement.">
+  <title>CheetahXpress — Boutique</title>
+  <link rel="icon" href="logo.png">
+  <link rel="preconnect" href="https://cdn.shopify.com">
+  <style>
+    :root{
+      --black:#050505; --black2:#101010; --gold:#dcae36; --gold2:#f4cf67;
+      --white:#fff; --muted:#b9b9b9; --line:rgba(220,174,54,.22);
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;background:radial-gradient(circle at 50% -10%,#211b0b 0,#080808 35%,#050505 70%);
+      color:var(--white);font-family:Arial,Helvetica,sans-serif;min-height:100vh;
+    }
+    a{text-decoration:none;color:inherit}
+    .topbar{
+      background:#000;border-bottom:1px solid var(--line);text-align:center;
+      padding:8px 14px;font-size:12px;color:var(--gold2);letter-spacing:.8px
+    }
+    header{
+      position:sticky;top:0;z-index:20;background:rgba(5,5,5,.94);
+      backdrop-filter:blur(12px);border-bottom:1px solid var(--line)
+    }
+    .nav{
+      max-width:1150px;margin:auto;display:flex;align-items:center;justify-content:space-between;
+      gap:16px;padding:12px 18px
+    }
+    .brand{display:flex;align-items:center;gap:10px;font-weight:900;letter-spacing:.5px}
+    .brand img{width:48px;height:48px;border-radius:50%;object-fit:cover}
+    .brand span{font-size:20px}.brand b{color:var(--gold2)}
+    .navlinks{display:flex;gap:18px;font-size:14px;color:#eee}
+    .navlinks a:hover{color:var(--gold2)}
+    .cart-btn{
+      border:1px solid var(--gold);background:#17120a;color:var(--gold2);
+      border-radius:999px;padding:9px 14px;font-weight:800;cursor:pointer
+    }
+    .hero{max-width:1150px;margin:auto;padding:54px 18px 30px;text-align:center}
+    .hero-logo{width:min(260px,60vw);height:auto;border-radius:50%;filter:drop-shadow(0 14px 35px rgba(220,174,54,.12))}
+    .eyebrow{color:var(--gold2);font-size:12px;font-weight:900;letter-spacing:2.4px;margin-top:18px}
+    h1{font-size:clamp(38px,8vw,72px);margin:8px 0 10px;line-height:.98}
+    h1 span{color:var(--gold2)}
+    .hero p{max-width:690px;margin:0 auto;color:#c9c9c9;line-height:1.7}
+    .hero-actions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:22px}
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;border-radius:999px;
+      padding:12px 18px;font-weight:900;border:1px solid var(--gold);cursor:pointer
+    }
+    .btn.gold{background:linear-gradient(135deg,#f4cf67,#b47b15);color:#080808}
+    .btn.dark{background:#0d0d0d;color:#fff}
+    main{max-width:1150px;margin:auto;padding:10px 18px 70px}
+    .section-head{display:flex;align-items:end;justify-content:space-between;gap:12px;margin:24px 0 16px}
+    .section-head h2{margin:0;font-size:28px}.section-head p{margin:0;color:var(--muted);font-size:13px}
+    .grid{
+      display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px
+    }
+    .product-card{
+      background:linear-gradient(180deg,#151515,#0b0b0b);border:1px solid var(--line);
+      border-radius:18px;overflow:hidden;box-shadow:0 12px 35px rgba(0,0,0,.25)
+    }
+    .product-card .media{aspect-ratio:1/1;background:#111;display:flex;align-items:center;justify-content:center;overflow:hidden}
+    .product-card shopify-media{width:100%;height:100%}
+    .product-card shopify-media img{width:100%;height:100%;object-fit:cover}
+    .product-body{padding:14px}
+    .product-title{font-weight:900;line-height:1.25;min-height:40px}
+    .price{margin:8px 0 12px;color:var(--gold2);font-size:18px;font-weight:900}
+    .product-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+    .small-btn{border-radius:10px;padding:10px 8px;border:1px solid var(--gold);background:#0c0c0c;color:#fff;font-weight:800;cursor:pointer}
+    .small-btn.buy{background:var(--gold);color:#090909}
+    .small-btn:disabled{opacity:.45;cursor:not-allowed}
+    .info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:34px}
+    .info{padding:20px;border:1px solid var(--line);border-radius:18px;background:#0c0c0c}
+    .info strong{display:block;color:var(--gold2);margin-bottom:7px}
+    .info p{margin:0;color:#bbb;line-height:1.6;font-size:14px}
+    footer{border-top:1px solid var(--line);padding:28px 18px;color:#999;text-align:center;font-size:13px}
+    .loading{padding:35px;text-align:center;color:#aaa}
+    .error{padding:18px;border:1px solid #6d4c1a;border-radius:14px;background:#171006;color:#e8c87c}
+    @media(max-width:900px){.grid{grid-template-columns:repeat(3,1fr)}}
+    @media(max-width:650px){
+      .navlinks{display:none}.grid{grid-template-columns:repeat(2,1fr)}
+      .info-grid{grid-template-columns:1fr}.hero{padding-top:38px}
+    }
+    @media(max-width:420px){.grid{gap:10px}.product-body{padding:11px}.product-actions{grid-template-columns:1fr}.brand span{font-size:17px}}
+  </style>
+  <!-- Pi Network SDK -->
+  <script src="https://sdk.minepi.com/pi-sdk.js"></script>
+  <!-- Shopify Storefront Web Components -->
+  <script src="https://cdn.shopify.com/storefront/web-components.js"></script>
+</head>
+<body>
+  <div id="pi-status" style="display:none;padding:10px 14px;text-align:center;background:#17120a;border-bottom:1px solid rgba(220,174,54,.22);color:#f4cf67;font-size:13px;font-weight:700;"></div>
+  <div class="topbar">🐆 FAST • RELIABLE • EXPRESS — PARFUMS IMPORTÉS & ACCESSOIRES</div>
+
+  <header>
+    <nav class="nav">
+      <a class="brand" href="#accueil">
+        <img src="logo.png" alt="CheetahXpress">
+        <span>Cheetah<b>Xpress</b></span>
+      </a>
+      <div class="navlinks">
+        <a href="#accueil">Accueil</a>
+        <a href="#catalogue">Catalogue</a>
+        <a href="#apropos">À propos</a>
+      </div>
+      <button class="cart-btn" onclick="document.getElementById('cart').showModal()">🛒 Panier</button>
+    </nav>
+  </header>
+
+  <shopify-store id="store"
+    store-domain="https://cheetahxpress.myshopify.com"
+    country="HT"
+    language="fr">
+  </shopify-store>
+
+  <section class="hero" id="accueil">
+    <img class="hero-logo" src="logo.png" alt="Logo CheetahXpress">
+    <div class="eyebrow">BOUTIQUE EN LIGNE</div>
+    <h1>Cheetah<span>Xpress</span></h1>
+    <p>Découvrez notre sélection de parfums importés et d’accessoires. Une expérience simple, rapide et élégante, directement connectée à notre boutique Shopify.</p>
+    <div class="hero-actions">
+      <a class="btn gold" href="#catalogue">Voir le catalogue</a>
+      <a class="btn dark" href="https://cheetahxpress.myshopify.com/" target="_blank" rel="noopener">Ouvrir la boutique</a>
+    </div>
+  </section>
+
+  <main>
+    <section id="catalogue">
+      <div class="section-head">
+        <div>
+          <h2>Nos produits</h2>
+          <p>Catalogue synchronisé avec CheetahXpress Shopify</p>
+        </div>
+      </div>
+
+      <div class="loading" shopify-loading-placeholder>Chargement du catalogue… 🐆</div>
+
+      <shopify-list-context type="product" query="products" first="24" sort-key="TITLE">
+        <template>
+          <article class="product-card">
+            <div class="media">
+              <shopify-media
+                query="product.selectedOrFirstAvailableVariant.image"
+                width="600" height="600">
+              </shopify-media>
+            </div>
+            <div class="product-body">
+              <div class="product-title"><shopify-data query="product.title"></shopify-data></div>
+              <div class="price">
+                <shopify-money query="product.selectedOrFirstAvailableVariant.price" format="money_with_currency"></shopify-money>
+              </div>
+              <div class="product-actions">
+                <button class="small-btn" onclick="document.getElementById('store').buyNow(event)"
+                  shopify-attr--disabled="!product.selectedOrFirstAvailableVariant.availableForSale">
+                  Acheter
+                </button>
+                <button class="small-btn buy" onclick="document.getElementById('cart').addLine(event).showModal()"
+                  shopify-attr--disabled="!product.selectedOrFirstAvailableVariant.availableForSale">
+                  + Panier
+                </button>
+              </div>
+            </div>
+          </article>
+        </template>
+      </shopify-list-context>
+    </section>
+
+    <section class="info-grid" id="apropos">
+      <div class="info"><strong>🚚 Livraison</strong><p>Service rapide et organisation des commandes depuis CheetahXpress.</p></div>
+      <div class="info"><strong>✨ Produits importés</strong><p>Une sélection de parfums et accessoires présentés avec une identité premium.</p></div>
+      <div class="info"><strong>🔐 Paiement sécurisé</strong><p>Le bouton Acheter redirige vers le checkout Shopify pour finaliser la commande.</p></div>
+    </section>
+  </main>
+
+  <shopify-cart id="cart" target="_top">
+    <div slot="empty">Votre panier est vide.</div>
+    <div slot="checkout-button">Passer au paiement</div>
+  </shopify-cart>
+
+  <footer>
+    © 2026 CheetahXpress — FAST. RELIABLE. EXPRESS.
+  </footer>
+  <script>
+    // Pi App Studio / Pi Browser authentication
+    // CheetahXpress only requests the username scope; it does not request Pi payments.
+    (async function initPiAuthentication() {
+      const status = document.getElementById('pi-status');
+
+      function showStatus(message, show = true) {
+        if (!status) return;
+        status.textContent = message;
+        status.style.display = show ? 'block' : 'none';
+      }
+
+      try {
+        if (!window.Pi) {
+          // Normal web browsers do not expose the Pi SDK runtime.
+          // The store remains usable outside Pi Browser.
+          return;
+        }
+
+        showStatus('Connexion à Pi Network…');
+
+        // Pi.init is asynchronous; authentication must wait for initialization.
+        await Pi.init({ version: '2.0' });
+
+        const scopes = ['username'];
+
+        function onIncompletePaymentFound(payment) {
+          console.warn('Pi: paiement incomplet détecté.', payment);
+        }
+
+        const auth = await Pi.authenticate(scopes, onIncompletePaymentFound);
+
+        if (auth && auth.user) {
+          const username = auth.user.username ? `@${auth.user.username}` : '';
+          showStatus(username ? `Connecté à Pi Network — ${username}` : 'Connecté à Pi Network');
+          setTimeout(() => showStatus('', false), 3000);
+        } else {
+          showStatus('Connexion Pi non confirmée.');
+        }
+      } catch (error) {
+        console.error('Pi authentication failed:', error);
+        showStatus('Connexion Pi indisponible. La boutique reste accessible.');
+      }
+    })();
+  </script>
+
+</body>
+</html>
